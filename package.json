@@ -1,0 +1,44 @@
+{
+  "name": "seriesbox-server",
+  "version": "0.0.1",
+  "description": "seriesbox-server\r ================",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Seriesbox/seriesbox-server.git"
+  },
+  "keywords": [
+    "tv",
+    "episode"
+  ],
+  "author": "datagutt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Seriesbox/seriesbox-server/issues"
+  },
+  "homepage": "https://github.com/Seriesbox/seriesbox-server",
+  "dependencies": {
+    "async": "^0.9.0",
+    "body-parser": "^1.9.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.3.3",
+    "csurf": "^1.6.3",
+    "express": "^5.0.0-alpha.1",
+    "express-session": "^1.9.1",
+    "less-middleware": "^1.0.4",
+    "method-override": "^2.3.0",
+    "moment": "^2.8.3",
+    "mongoose": "^3.8.19",
+    "mongoose-cache-manager": "^0.1.0",
+    "nconf": "^0.6.9",
+    "parse-torrent-name": "^0.5.1",
+    "passport": "^0.2.1",
+    "passport-local-mongoose": "^1.0.0",
+    "slug": "^0.8.0",
+    "static-favicon": "^2.0.0-alpha",
+    "swig": "^1.4.2"
+  }
+}
