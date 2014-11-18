@@ -1,0 +1,55 @@
+/* Site */
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+html,
+button,
+input,
+select,
+textarea,
+.pure-g [class*="pure-u"] {
+  font-size: 15px;
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+}
+input,
+.pure-button {
+  font-family: inherit;
+}
+#top .pure-menu {
+  background: #0074d9;
+  color: #ffffff;
+}
+.pure-menu {
+  min-height: 50px;
+  position: relative;
+  min-height: 45px;
+  border: 1px solid transparent;
+  border-bottom: 1px solid rgba(199, 192, 222, 0.1);
+}
+.pure-menu .pure-menu-heading {
+  color: inherit;
+  font-weight: 400;
+  font-size: 120%;
+}
+.pure-menu li {
+  float: left;
+  height: 100%;
+  margin: 0 20px;
+}
+.pure-menu li a {
+  position: relative;
+  display: block;
+  color: #fff;
+  padding: 10px 15px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+.pure-menu li a:hover {
+  background: #0d8eff;
+}
+.pure-menu li.pure-menu-selected a {
+  background: ligthen(#0074d9, 10%);
+  color: inherit;
+}

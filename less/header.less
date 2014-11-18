@@ -1,0 +1,38 @@
+@header-background-color: #0074D9;
+@header-text-color: #FFFFFF;
+#top .pure-menu {
+	background: @header-background-color;
+	color: @header-text-color;
+}
+.pure-menu {
+	min-height: 50px;
+	position: relative;
+	min-height: 45px;
+	border: 1px solid transparent;
+	border-bottom: 1px solid rgba(199, 192, 222, .1);
+	.pure-menu-heading {
+		color: inherit;
+		font-weight: 400;
+		font-size: 120%;
+	}
+	li {
+		float: left;
+		height: 100%;
+		margin: 0 20px;
+		a {
+			position: relative;
+			display: block;
+			color: #fff;
+			padding: 10px 15px;
+			padding-top: 16px;
+			padding-bottom: 16px;
+		}
+		a:hover {
+			background: lighten(@header-background-color, 10%);
+		}
+	}
+	li.pure-menu-selected a {
+		background: ligthen(@header-background-color, 10%);
+		color: inherit;
+	}
+}

@@ -1,5 +1,15 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+{% if status == 404 %}
+<div class="error-page">
+	<h1>Page not found!</h1>
+	<p>This page does not exist.</p>
+</div>
+{% else %}
 <div class="error-page">
 	<h1>Oops!</h1>
 	<p>Something went wrong.</p>
-	<p>The server says: "{{ errorMessage }}"</p>
+	<p>The server says: "{{ message }}"</p>
 </div>
+{% endif %%}
+{% endblock %}

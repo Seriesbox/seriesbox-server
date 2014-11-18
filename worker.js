@@ -11,6 +11,7 @@ var express = require('express'),
 	lessMiddleware = require('less-middleware'),
 	mongoose = require('mongoose'),
 	mongooseCache = require('mongoose-cache-manager'),
+	httpResponses = require('http-responses'),
 	passport = require('passport'),
 	flash = require('connect-flash');
 var app;
@@ -28,7 +29,7 @@ function setup(app, models){
 	app.set('view cache', false);
 	app.set('views', __dirname + '/src/views');
 	swig.setDefaults({cache: false});
-	app.use(lessMiddleware(path.join(__dirname, '/src/less'), {
+	app.use(lessMiddleware(path.join(__dirname, '/less'), {
 			dest: path.join(__dirname, 'public'),
 			preprocess: {
 				path: function(pathname, req){
@@ -50,12 +51,19 @@ function setup(app, models){
 		resave: true,
 		saveUninitialized: true
 	}));
+	app.use(httpResponses);
 	app.use(passport.initialize());
 	app.use(passport.session()); // persistent login sessions
 	app.use(flash());
 
 	if(nconf.get('site:use_csrf')){
 		app.use(csrf());
+		app.use(function(err, req, res, next){
+ 			if(err.code !== 'EBADCSRFTOKEN'){
+				return next(err)
+			}
+			next(new res.Forbidden('Session has expired or form has been tampered with.'));
+		})
 		app.use(function(req, res, next){
 			res.locals.csrftoken = req.csrfToken();
 
@@ -71,7 +79,7 @@ function setup(app, models){
 	});
 
 	// Config
-	app.locals.siteName = nconf.get('server:site_name');
+	app.locals.siteName = nconf.get('site:name');
 	// Helpers
 	app.locals.slug = require('slug');
 	app.locals.moment = require('moment');
@@ -79,8 +87,7 @@ function setup(app, models){
 		return new Date();
 	};
 
-	setupRoutes(models, function(){
-	});
+	setupRoutes(models, function(){});
 	app.use(require('./src/errorHandler'));
 }
 

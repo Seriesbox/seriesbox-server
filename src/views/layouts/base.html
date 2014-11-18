@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>
+	{% if title %}{{ title }} - {% endif %}
+	{{ siteName }}
+	</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:100,300,400,700,600' rel='stylesheet' type='text/css'>
+	<link href="/assets/stylesheets/pure-min.css" rel="stylesheet" />
+	<!--[if lte IE 8]>
+		<link rel="stylesheet" href="/assets/stylesheets/grids-responsive-old-ie-min.css">
+	<![endif]-->
+	<!--[if gt IE 8]><!-->
+		<link rel="stylesheet" href="/assets/stylesheets/grids-responsive-min.css">
+	<!--<![endif]-->
+	<link href="/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/assets/stylesheets/site.css" rel="stylesheet" />
+{% for stylesheet in stylesheets %}
+	<link href="/assets/stylesheets/{{stylesheet}}" rel="stylesheet" />
+{% endfor %}
+	<link href="/assets/stylesheets/handheld.css" media="screen and (max-device-width:40em)" rel="stylesheet">
+	<link media="handheld" href="/assets/stylesheets/handheld.css" rel="stylesheet">
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<style type="text/css">header,nav,section,article,aside,footer,hgroup,main { display: block;}</style>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<![endif]-->
+</head>
+<body>
+	<!--[if lt IE 8]>
+	<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+	<![endif]-->
+	<header id="top">
+		{% include 'header.html' %}
+	</header>
+	<div class="container">
+		{% block content %}{% endblock %}
+	</div>
+	<footer id="footer" class="pure-g pure-u-1">
+		{% include 'footer.html' %}
+	</footer>
+	<!-- Dependencies -->
+	<script src="/assets/javascripts/ID.js"></script>
+	<script src="/assets/javascripts/bootstrap.js"></script>
+	<!-- Site-specific -->
+	{% for script in scripts %}
+	<script src="/assets/javascripts/{{ script }}"></script>
+	{% endfor %}
+</body>
+</html>

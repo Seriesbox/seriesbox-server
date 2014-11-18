@@ -28,6 +28,7 @@
     "csurf": "^1.6.3",
     "express": "^5.0.0-alpha.1",
     "express-session": "^1.9.1",
+    "http-responses": "0.0.4",
     "less-middleware": "^1.0.4",
     "method-override": "^2.3.0",
     "moment": "^2.8.3",

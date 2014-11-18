@@ -17,7 +17,7 @@
 			'cluster': false
 		},
 		'site': {
-			'site_name': 'Seriesbox',
+			'name': 'Seriesbox',
 			'use_csrf': true
 		}
 	});

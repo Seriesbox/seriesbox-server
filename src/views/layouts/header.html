@@ -1,0 +1,10 @@
+<div class="pure-menu pure-menu-open pure-menu-horizontal navbar">
+	<a href="/" class="pure-menu-heading">{{ siteName }}</a>
+	<ul role="navigation">
+		<li><a href="/shows">TV</a></li>
+		<li><a href="/movies">Movies</a></li>
+		<li><a href="/requests">Requests</a></li>
+	</ul>
+</div>
+{% if isAuthenticated() %}
+{% endif %}

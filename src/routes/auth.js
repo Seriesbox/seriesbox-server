@@ -1,6 +1,10 @@
 module.exports = function auth(app, api){
 	app.get('/auth', function(req, res, next){
-		next(new Error('xd'));
+		next(new res.NotAcceptable('Invalid URL'));
+	});
+
+	app.get('/auth/login', function(req, res){
+		res.render('auth/login');
 	});
 
 	app.post('/auth/login', passport.authenticate('local', {
