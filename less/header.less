@@ -1,8 +1,9 @@
-@header-background-color: #0074D9;
+@header-background-color: @brand-primary;
 @header-text-color: #FFFFFF;
 #top .pure-menu {
 	background: @header-background-color;
 	color: @header-text-color;
+	border-color: darken(@header-background-color, 10%);
 }
 .pure-menu {
 	min-height: 50px;
@@ -28,11 +29,11 @@
 			padding-bottom: 16px;
 		}
 		a:hover {
-			background: lighten(@header-background-color, 10%);
+			background: darken(@header-background-color, 10%);
 		}
 	}
 	li.pure-menu-selected a {
-		background: ligthen(@header-background-color, 10%);
+		background: darken(@header-background-color, 10%);
 		color: inherit;
 	}
 }

@@ -1,4 +1,5 @@
-module.exports = function auth(app, api){
+module.exports = function auth(app, models){
+	var Account = models.Account;
 	app.get('/auth', function(req, res, next){
 		next(new res.NotAcceptable('Invalid URL'));
 	});

@@ -17,9 +17,49 @@ input,
 .pure-button {
   font-family: inherit;
 }
+.pure-button-primary {
+  background-color: #2780e3;
+}
+.pure-button-success {
+  background-color: #3fb618;
+}
+.pure-button-info {
+  background-color: #9954bb;
+}
+.pure-button-warning {
+  background-color: #ff7518;
+}
+.pure-button-danger {
+  background-color: #ff0039;
+}
+/* Additional framework code */
+.pure-img-responsive {
+  max-width: 100%;
+  height: auto;
+}
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-justify {
+  text-align: justify;
+}
+/* General layout */
+.pure-form input {
+  box-shadow: none !important;
+}
+.pure-form legend {
+  font-size: 21px;
+}
 #top .pure-menu {
-  background: #0074d9;
+  background: #2780e3;
   color: #ffffff;
+  border-color: #1967be;
 }
 .pure-menu {
   min-height: 50px;
@@ -47,9 +87,65 @@ input,
   padding-bottom: 16px;
 }
 .pure-menu li a:hover {
-  background: #0d8eff;
+  background: #1967be;
 }
 .pure-menu li.pure-menu-selected a {
-  background: ligthen(#0074d9, 10%);
+  background: #1967be;
   color: inherit;
+}
+#footer {
+  color: #777;
+}
+/* Pages */
+/*#1c1c1f*/
+.login-page .container {
+  padding-top: 90px;
+  padding-bottom: 20px;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.login-page .login-container {
+  display: table;
+  margin: 0 auto;
+}
+.login-page .login-box {
+  display: table-cell;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+  margin: 15% auto 0 auto;
+  float: none !important;
+}
+.login-page .errors:after {
+  clear: both;
+  content: "";
+  display: block;
+}
+.login-page .errors {
+  top: 0;
+  width: 100%;
+}
+.login-page footer {
+  z-index: 1;
+  position: relative;
+  height: 50px;
+  bottom: 0;
+}
+@media (min-width: 768px) {
+  .login-page .container {
+    width: 100%;
+  }
+}
+@media (min-width: 992px) {
+  .login-page .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .login-page .container {
+    width: 1170px;
+  }
 }

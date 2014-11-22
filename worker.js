@@ -13,10 +13,13 @@ var express = require('express'),
 	mongooseCache = require('mongoose-cache-manager'),
 	httpResponses = require('http-responses'),
 	passport = require('passport'),
-	flash = require('connect-flash');
+    LocalStrategy = require('passport-local').Strategy,
+	flash = require('flash');
 var app;
+var models;
 var configDB = require('./config/database');
-function setup(app, models){
+var noop = function(){};
+function setup(app){
 	mongoose.connect(configDB.url);
 	mongooseCache(mongoose, {
 		cache: true,
@@ -24,6 +27,14 @@ function setup(app, models){
 		store: 'memory',
 		prefix: 'cache'
 	});
+	models = require('./src/models');
+	var Account = models.Account;
+
+	passport.use(new LocalStrategy(Account.authenticate()));
+
+	passport.serializeUser(Account.serializeUser());
+	passport.deserializeUser(Account.deserializeUser());
+
 	app.engine('html', swig.renderFile);
 	app.set('view engine', 'html');
 	app.set('view cache', false);
@@ -87,7 +98,7 @@ function setup(app, models){
 		return new Date();
 	};
 
-	setupRoutes(models, function(){});
+	setupRoutes(models, noop);
 	app.use(require('./src/errorHandler'));
 }
 

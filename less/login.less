@@ -1,0 +1,56 @@
+/*#1c1c1f*/
+@landing-header-background: #202529;
+.login-page {
+	.container {
+		padding-top: 90px;
+		padding-bottom: 20px;
+		padding-right: 15px;
+		padding-left: 15px;
+		margin-right: auto;
+		margin-left: auto;
+	}
+	.login-container {
+		display: table;
+		margin: 0 auto;
+	}
+	.login-box {
+		display: table-cell;
+		position: relative;
+		width: 100%;
+		height: 100%;
+		vertical-align: middle;
+		margin: 15% auto 0 auto;
+		float: none !important;
+	}
+	.errors:after {
+		clear: both;
+		content: "";
+		display: block;
+	}
+	.errors {
+		top: 0;
+		width: 100%;
+	}
+	footer {
+		z-index: 1;
+		position: relative;
+		height: 50px;
+		bottom: 0;
+	}
+
+	@media(min-width:768px){
+		.container {
+			width: 100%;
+		}
+	}
+	@media(min-width:992px){
+		.container {
+			width: 970px;
+		}
+	}
+	@media(min-width:1200px){
+		.container {
+			width: 1170px;
+		}
+	}
+}

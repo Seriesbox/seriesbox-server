@@ -1,4 +1,9 @@
 /* Site */
+@brand-primary: #2780E3;
+@brand-success: #3FB618;
+@brand-info: #9954BB;
+@brand-warning: #FF7518;
+@brand-danger: #FF0039;
 body {
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
@@ -9,10 +14,46 @@ html, button, input, select, textarea,
 	font-size: 15px;
 	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
-input, .pure-button {
+input,
+.pure-button {
     font-family: inherit;
 }
+.pure-button-primary {
+	background-color: @brand-primary;
+}
+.pure-button-success {
+	background-color: @brand-success;
+}
+.pure-button-info {
+	background-color: @brand-info;
+}
+.pure-button-warning {
+	background-color: @brand-warning;
+}
+.pure-button-danger {
+	background-color: @brand-danger;
+}
+/* Additional framework code */
+.pure-img-responsive {
+    max-width: 100%;
+    height: auto;
+}
+.text-left {
+	text-align: left;
+}
+.text-center {
+	text-align: center;
+}
+.text-right {
+	text-align: right;
+}
+.text-justify {
+	text-align: justify;
+}
+/* General layout */
 @import "mixins";
 @import "forms";
 @import "header";
 @import "footer";
+/* Pages */
+@import "login.less";
