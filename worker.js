@@ -69,6 +69,13 @@ function setup(app){
 	app.use(passport.initialize());
 	app.use(passport.session()); // persistent login sessions
 	app.use(flash());
+	// Fix for flash messages not being removed
+	app.use(function(req, res, next){
+		if(req.session.flash.length > 0){
+			req.session.flash = [];
+		}
+		next();
+	});
 
 	if(nconf.get('site:use_csrf')){
 		app.use(csrf());
