@@ -98,6 +98,9 @@ input,
 }
 /* Pages */
 /*#1c1c1f*/
+.login-page {
+  background: #f2f7fd;
+}
 .login-page .container {
   padding-top: 90px;
   padding-bottom: 20px;
