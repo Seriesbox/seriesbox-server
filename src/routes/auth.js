@@ -78,6 +78,12 @@ module.exports = function auth(app, models){
 		});
 	});
 
+	app.get('/utopia', function(req, res){
+		Invite.generate(function(err, token){
+			res.send(token);
+		});
+	});
+
     app.get('/auth/logout', function(req, res){
         req.logout();
         res.redirect('/');

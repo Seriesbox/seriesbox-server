@@ -9,11 +9,11 @@ module.exports = function(){
 		email: String
 	});
 	
-	Invite.statics.generate = function generate(token, cb){
+	Invite.statics.generate = function generate(cb){
 		var invite = new Invite();
 		var seed = crypto.randomBytes(20);
 		
-		invite.token = 	crypto.createHash('sha1').update(seed).digest('hex');
+		invite.token = crypto.createHash('sha1').update(seed).digest('hex');
 		invite.save(function(err){
 			return cb(err, invite.token);
 		});
