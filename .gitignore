@@ -28,3 +28,4 @@ node_modules
 .lock-wscript
 config/
 public/assets/font-awesome/
+public/assets/stylesheets/site.css

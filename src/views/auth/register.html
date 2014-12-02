@@ -21,14 +21,17 @@
 
 						<input type="hidden" name="_csrf" value="{{ csrftoken }}">
 
-						<label for="email"><i class="fa fa-user fa-fw"></i></label>
+						<label for="username"><i class="fa fa-user fa-fw"></i></label>
+						<input id="username" type="text" name="username" placeholder="Username">
+
+						<label for="email"><i class="fa fa-at fa-fw"></i></label>
 						<input id="email" type="email" name="email" placeholder="Email">
 
 						<label for="password"><i class="fa fa-lock fa-fw"></i></label>
 						<input id="password" type="password" name="password" placeholder="Password">
 
 						<label for="invite"><i class="fa fa-key fa-fw"></i></label>
-						<input id="invite" type="text" name="invite" placeholder="Code" value="{{ inviteToken }}">
+						<input id="invite" type="text" name="inviteToken" placeholder="Code" value="{{ inviteToken }}">
 
 						<button type="submit" class="pure-button pure-button-primary">Sign up</button>
 					</fieldset>

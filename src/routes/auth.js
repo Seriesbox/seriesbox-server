@@ -1,4 +1,4 @@
-var makeUser = function(req, res, models, user, token){
+var makeUser = function(req, res, models, token){
 	var Account = models.Account,
 		Invite = models.Invite;
 	if(req.body.username){
@@ -8,28 +8,27 @@ var makeUser = function(req, res, models, user, token){
 		var errors = [];
 		
 		if(username.length == 0){
-			req.flash('error', 'Username must contain more than 1 character')
+			req.flash('error', 'Username must contain more than 1 character');
 		}
 		
 		if(password.length < 5){
 			req.flash('error', 'Password must contain more than 5 characters');
 		}
-		User.exists(username, function(taken){
+		Account.findByUsername(username, function(err, user){
+			console.log(err, user)
+			var taken = !!user;
 			if(taken){
 				req.flash('error', 'Username is already registered');
 			}
+			errors = Object.keys(res.locals.flash);
 		
 			if(errors.length == 0){
 				Account.register(new Account({username: username, email: email}), password, function(err, account) {
 					if(token){
 						Invite.accept(token, function(err){
-							if(!err){
-								account.save();
-							}
 							res.redirect('/');
 						});
 					}else{
-						account.save();
 						res.redirect('/');
 					}
 				});
@@ -40,6 +39,7 @@ var makeUser = function(req, res, models, user, token){
 			}
 		});
 	}else{
+		req.flash('error', 'Username does not exist');
 		res.render('auth/register', {
 			'inviteToken': token
 		});
@@ -63,13 +63,15 @@ module.exports = function auth(app, models){
 	}));
 
 	app.all('/auth/register/:inviteToken?', function(req, res){
-		var inviteToken = req.params.inviteToken;
+		var inviteToken = req.body.inviteToken || req.params.inviteToken;
 		Invite.valid(inviteToken, function(err, valid){
 			if(!err && valid){
-				makeUser(req, res, models, user, inviteToken);
+				makeUser(req, res, models, inviteToken);
 			}else{
 				if(inviteToken && inviteToken !== ''){
 					req.flash('error', 'Invalid invite provided');
+				}else if(req.method == 'POST'){
+					req.flash('error', 'No invite provided');
 				}
 				res.render('auth/register', {
 					'inviteToken': inviteToken
