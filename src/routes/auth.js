@@ -1,3 +1,4 @@
+var emailRegex = require('email-regex');
 var makeUser = function(req, res, models, token){
 	var Account = models.Account,
 		Invite = models.Invite;
@@ -9,6 +10,10 @@ var makeUser = function(req, res, models, token){
 		
 		if(username.length == 0){
 			req.flash('error', 'Username must contain more than 1 character');
+		}
+
+		if(!emailRegex({exact: true}).test(email)){
+			req.flash('error', 'No valid email provided');
 		}
 		
 		if(password.length < 5){

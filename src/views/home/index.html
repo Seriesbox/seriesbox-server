@@ -2,6 +2,7 @@
 {% set customClasses = ['home-page'] %}
 {% block content %}
 <div class="home-container">
-<h3>Hi {{ user.user }}.</h3>
+<h2>Hi {{ user.username }},</h2>
+<p>Your email address is {{ user.email }}.</p>
 </div>
 {% endblock %}
