@@ -1,1 +1,7 @@
-Hi {{ user.user }}.
+{% extends '../layouts/base.html' %}
+{% set customClasses = ['home-page'] %}
+{% block content %}
+<div class="home-container">
+<h3>Hi {{ user.user }}.</h3>
+</div>
+{% endblock %}
