@@ -30,7 +30,9 @@
     "express-session": "^1.9.1",
     "flash": "^1.1.0",
     "http-responses": "0.0.4",
+    "junk": "^1.0.0",
     "less-middleware": "^1.0.4",
+    "lodash": "^2.4.1",
     "method-override": "^2.3.0",
     "moment": "^2.8.3",
     "mongoose": "^3.8.19",
@@ -40,8 +42,11 @@
     "passport": "^0.2.1",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^1.0.0",
+    "path": "^0.4.9",
+    "replace-ext": "0.0.1",
     "serve-favicon": "^2.1.7",
     "slug": "^0.8.0",
-    "swig": "^1.4.2"
+    "swig": "^1.4.2",
+    "to-title-case": "^0.1.5"
   }
 }
