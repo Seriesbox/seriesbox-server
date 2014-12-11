@@ -46,12 +46,14 @@ var FolderParser = function(dir){
 		if(err){
 			throw err;
 		}
+		var list;
 		files = files.filter(junk.not);
-		list = _.each(files, function(file){
-			console.log(file)
-			return FileParser(file);
+		list = _.each(files, function(file, index, list){
+			file = FileParser(path.basename(file));
+			list[index] = file;
+			return file;
 		});
-		console.log(list)
+		//console.log(list)
 		var shows = [];
 		_.each(list,  function(item){
 			if(!shows[item.title]){
@@ -62,6 +64,7 @@ var FolderParser = function(dir){
 			var ep = _.pick(item, _.identity);
 			shows[item.title].push(ep);
 		});
+		console.log(shows);
 		return shows;
 	});
 };
