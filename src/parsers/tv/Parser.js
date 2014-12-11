@@ -38,6 +38,7 @@ var walk = function(dir, done) {
 };
 var FileParser = function(file){
 	var name = replaceExt(file, '');
+	parsed = ptn(name);
 	//console.log(info);
 	return ptn(name);
 };
@@ -49,20 +50,27 @@ var FolderParser = function(dir){
 		var list;
 		files = files.filter(junk.not);
 		list = _.each(files, function(file, index, list){
-			file = FileParser(path.basename(file));
-			list[index] = file;
+			var parsedFile = FileParser(path.basename(file));
+			parsedFile.file = file;
+			if(file !== parsedFile && typeof parsedFile == 'object' && parsedFile.title){
+				list[index] = parsedFile;
+			}else{
+				list[index] = null;
+			}
 			return file;
 		});
 		//console.log(list)
 		var shows = [];
 		_.each(list,  function(item){
-			if(!shows[item.title]){
-				shows[item.title] = [];
+			if(item && item.title && item.season){
+				if(!shows[item.title]){
+					shows[item.title] = [];
+				}
+				// Filter all undefined properties 
+				// http://stackoverflow.com/questions/14058193/remove-empty-properties-falsy-values-from-object-with-underscore-js
+				var ep = _.pick(item, _.identity);
+				shows[item.title].push(ep);
 			}
-			// Filter all undefined properties 
-			// http://stackoverflow.com/questions/14058193/remove-empty-properties-falsy-values-from-object-with-underscore-js
-			var ep = _.pick(item, _.identity);
-			shows[item.title].push(ep);
 		});
 		console.log(shows);
 		return shows;
