@@ -30,10 +30,7 @@ function setup(app){
 	models = require('./src/models');
 	var Account = models.Account;
 
-	passport.use(new LocalStrategy({
-		usernameField: 'email',
-		passwordField: 'password'
-	}, Account.authenticate()));
+	passport.use(Account.createStrategy());
 
 	passport.serializeUser(Account.serializeUser());
 	passport.deserializeUser(Account.deserializeUser());
