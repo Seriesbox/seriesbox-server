@@ -51,7 +51,7 @@ var FolderParser = function(dir){
 		files = files.filter(junk.not);
 		list = _.each(files, function(file, index, list){
 			var parsedFile = FileParser(path.basename(file));
-			parsedFile.file = file;
+			parsedFile.file = path.basename(file);
 			if(file !== parsedFile && typeof parsedFile == 'object' && parsedFile.title){
 				list[index] = parsedFile;
 			}else{
