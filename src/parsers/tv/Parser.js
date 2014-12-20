@@ -68,7 +68,7 @@ var FolderParser = function(dir, callback){
 					item.title = 'Doctor Who 2005';
 				}
 				// HACK: The Office
-				if(item.title == 'The Office'){
+				if(item.title == 'The Office' && item.season > 3){
 					item.title = 'The Office US';
 				}
 				// START HACK: Hack around the various parse-torrent-name bugs
