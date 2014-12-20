@@ -63,6 +63,10 @@ var FolderParser = function(dir, callback){
 		var shows = [];
 		_.each(list,  function(item){
 			if(item && item.title && item.season){
+				// HACK: All DW episodes after 2005 are separated
+				if(item.title == 'Doctor Who' && item.year == '2005'){
+					item.title = 'Doctor Who 2005';
+				}
 				// START HACK: Hack around the various parse-torrent-name bugs
 				// Trim whitespaces
 				var tmp = item.title.trim();
@@ -77,7 +81,6 @@ var FolderParser = function(dir, callback){
 				tmp = tmp.replace(/-.*-/, ' ');
 				// Trim once more
 				tmp = tmp.trim();
-				console.log(tmp);
 				// Use tmp variable as show title from now on
 				if(tmp){
 					item.title = tmp;
@@ -86,6 +89,7 @@ var FolderParser = function(dir, callback){
 				if(!shows[item.title]){
 					shows[item.title] = [];
 				}
+
 				// Filter all undefined properties 
 				// http://stackoverflow.com/questions/14058193/remove-empty-properties-falsy-values-from-object-with-underscore-js
 				var ep = _.pick(item, _.identity);

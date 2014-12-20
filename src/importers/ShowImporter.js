@@ -14,28 +14,26 @@ ShowImporter.prototype.importAll = function(dir, callback){
 		Object.keys(shows).forEach(function(show){
 			if(show){
 				Show.findOne(show, function(err, result){
-					if(!result){
-						var query = encodeURIComponent(show);
-						if(shows[show].year){
-							query += year;
-						}
-						trakt.searchShows({
-							'query': query,
-							'limit': 1,
-							'seasons': true
-						}, function(err, data){
-							if(err){
-								return callback(err);
-							}
-							if(data) console.log(data);
-							return;
-							var show = new Show(data[0]);
-							show.save(function(err, result){
-								console.log(err, result);
-								callback(err, show);
+						if(!result || !result.length){
+							try {
+							trakt.showSummary({
+								'title': show.replace(/\s/g, '-'),
+								'extended': false
+							}, function(err, data){
+								if(err){
+									console.log(err)
+									return callback(err);
+								}
+								if(data) console.log(data);
+								if(data && data.length > 0 && typeof data !== 'string'){
+									var show = new Show(data[0]);
+									show.save(function(err, result){
+										console.log(err, result);
+										callback(err, show);
+									});
+								}
 							});
-						});
-					}
+						}
 				})
 			}else{
 				callback(new Error('TV show not found'));

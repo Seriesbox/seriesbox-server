@@ -17,7 +17,7 @@ module.exports = function home(app, models){
 	app.get('/import', function(req, res){
 		var dir = '\/\\192.168.0.11\/htpc\/TV',
 			importer = new ShowImporter(traktConfig.apiKey, models);
-		importer.importAll(dir);
+		importer.importAll(dir, console.log);
 		res.end();
 	});
 };
