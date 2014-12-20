@@ -24,9 +24,8 @@ ShowImporter.prototype.importAll = function(dir, callback){
 									console.log(err)
 									return callback(err);
 								}
-								if(data) console.log(data);
-								if(data && data.length > 0 && typeof data !== 'string'){
-									var show = new Show(data[0]);
+								if(data && typeof data == 'object' && data.url && data.title){
+									var show = new Show(data);
 									show.save(function(err, result){
 										console.log(err, result);
 										callback(err, show);
