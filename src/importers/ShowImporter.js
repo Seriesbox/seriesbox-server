@@ -12,6 +12,10 @@ ShowImporter.prototype.importAll = function(dir, callback){
 	var Show = self.models.Show;
 	ShowParser.FolderParser(dir, function(err, shows){
 		Object.keys(shows).forEach(function(show){
+			// HACK: All DW episodes after 2005 are separated
+			if(show == 'Doctor Who' && shows[show].year == '2005'){
+				shows['Doctor Who (2005)'] = shows
+			}
 			if(show){
 				Show.findOne(show, function(err, result){
 						if(!result || !result.length){

@@ -5,6 +5,7 @@ module.exports = function home(app, models){
 		var Show = models.Show;
 		if(req.isAuthenticated()){
 			Show.find(function(err, shows){
+				console.log(shows)
 				res.render('shows/index', {
 					user: req.user,
 					shows: shows
