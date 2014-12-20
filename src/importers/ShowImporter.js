@@ -17,7 +17,7 @@ ShowImporter.prototype.importAll = function(dir, callback){
 						if(!result || !result.length){
 							console.log(show.replace(/\s/g, '-'))
 							trakt.showSummary({
-								'title': show.replace(/\s/g, '-'),
+								'title': encodeURI(show.replace(/\s/g, '-')),
 								'extended': false
 							}, function(err, data){
 								if(err){
