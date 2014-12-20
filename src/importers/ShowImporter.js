@@ -15,7 +15,6 @@ ShowImporter.prototype.importAll = function(dir, callback){
 			if(show){
 				Show.findOne(show, function(err, result){
 						if(!result || !result.length){
-							try {
 							trakt.showSummary({
 								'title': show.replace(/\s/g, '-'),
 								'extended': false
