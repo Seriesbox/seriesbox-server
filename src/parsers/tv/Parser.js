@@ -67,6 +67,10 @@ var FolderParser = function(dir, callback){
 				if(item.title == 'Doctor Who' && item.year == '2005'){
 					item.title = 'Doctor Who 2005';
 				}
+				// HACK: The Office
+				if(item.title == 'The Office'){
+					item.title = 'The Office US';
+				}
 				// START HACK: Hack around the various parse-torrent-name bugs
 				// Trim whitespaces
 				var tmp = item.title.trim();
