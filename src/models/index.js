@@ -1,4 +1,5 @@
 module.exports = {
 	Account: require('./account'),
-	Invite: require('./Invite')
+	Invite: require('./Invite'),
+	Show: require('./Show')
 };

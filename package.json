@@ -38,6 +38,7 @@
     "mongoose": "^3.8.19",
     "mongoose-cache-manager": "git://github.com/englercj/mongoose-cache-manager",
     "nconf": "^0.6.9",
+    "node-trakt": "0.0.2",
     "parse-torrent-name": "^0.5.2",
     "passport": "^0.2.1",
     "passport-local": "^1.0.0",

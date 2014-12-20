@@ -21,12 +21,12 @@ var configDB = require('./config/database');
 var noop = function(){};
 function setup(app){
 	mongoose.connect(configDB.url);
-	mongooseCache(mongoose, {
+	/*mongooseCache(mongoose, {
 		cache: true,
 		ttl: 60,
 		store: 'memory',
 		prefix: 'cache'
-	});
+	});*/
 	models = require('./src/models');
 	var Account = models.Account;
 
