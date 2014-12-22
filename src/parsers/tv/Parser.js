@@ -71,29 +71,9 @@ var FolderParser = function(dir, callback){
 				if(item.title == 'The Office' && item.season > 3){
 					item.title = 'The Office US';
 				}
-				// START HACK: Hack around the various parse-torrent-name bugs
-				// Trim whitespaces
-				var tmp = item.title.trim();
-				// Is there an - or _ at the end? Then there probably was a parsing error
-				if(tmp[tmp.length - 1] == '-' 
-					|| tmp[tmp.length - 1] == '_'){
-					// Remove the offending - or _
-					tmp = tmp.slice(0, tmp.length - 1);
-				}
-				// Use whitespace instead of - and _ to separate words
-				tmp = tmp.replace(/_.*_/, ' ');
-				tmp = tmp.replace(/-.*-/, ' ');
-				// Trim once more
-				tmp = tmp.trim();
-				// Use tmp variable as show title from now on
-				if(tmp){
-					item.title = tmp;
-				}
-				// END HACK
 				if(!shows[item.title]){
 					shows[item.title] = [];
 				}
-
 				// Filter all undefined properties 
 				// http://stackoverflow.com/questions/14058193/remove-empty-properties-falsy-values-from-object-with-underscore-js
 				var ep = _.pick(item, _.identity);
