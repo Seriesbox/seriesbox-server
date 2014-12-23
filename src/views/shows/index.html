@@ -1,10 +1,13 @@
+{% set scripts = ['vendor/metafizzy/packery.pkgd.min.js', 'pages/shows.js'] %}
 {% extends '../layouts/base.html' %}
 {% set customClasses = ['shows-page'] %}
 {% block content %}
 <h2>Shows</h2>
 <div class="show-container" class="js-packery" data-packery-options='{ "itemSelector": ".show", "gutter": 10 }'>
-	{% for show in shows %}
-		{% include '_show.html' with show %}
-	{% endfor %}
+	<div class="pure-u ">
+		{% for show in shows %}
+			{% include '_show.html' with show %}
+		{% endfor %}
+	</div>
 </div>
 {% endblock %}

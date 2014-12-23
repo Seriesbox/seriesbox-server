@@ -14,7 +14,7 @@ ShowImporter.prototype.importAll = function(dir, callback){
 		Object.keys(shows).forEach(function(show){
 			if(show){
 				Show.findOne(show, function(err, result){
-						if(!result || !result.length){
+						if(!err && (!result || !result.length)){
 							console.log(show.replace(/\s/g, '-'))
 							trakt.showSummary({
 								'title': encodeURI(show.replace(/\s/g, '-')),
@@ -25,6 +25,7 @@ ShowImporter.prototype.importAll = function(dir, callback){
 									return callback(err);
 								}
 								if(data && typeof data == 'object' && data.url && data.title){
+									data.url = data.url.replace('http://trakt.tv/show/');
 									var show = new Show(data);
 									show.save(function(err, result){
 										console.log(err, result);
@@ -33,7 +34,7 @@ ShowImporter.prototype.importAll = function(dir, callback){
 								}
 							});
 						}
-				})
+				});
 			}else{
 				callback(new Error('TV show not found'));
 			}

@@ -1,4 +1,6 @@
-<div class="show">
-	<div class="show-poster"><a href="/show/"><img src="{{ show.images.poster }}" class="pure-img"></a></div>
-	<h4 class="show-title">{{ show.title }}</h4>
+<div class="pure-u-1-2 pure-u-sm-1-4 pure-u-lg-1-6 pure-u-xl-1-12">
+	<div class="show">
+		<div class="show-poster"><a href="/show/{{ show.url|replace('http://trakt.tv/show/', '') }}"><img src="{{ show.images.poster }}" class="pure-img"></a></div>
+		<h4 class="show-title">{{ show.title }}</h4>
+	</div>
 </div>
