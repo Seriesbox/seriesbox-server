@@ -72,7 +72,7 @@ var FolderParser = function(dir, callback){
 					item.title = 'The Office US';
 				}
 				// HACK: House of Cards
-				if(item.title == 'House of Cards' && item.year >= 2013){
+				if(item.title == 'House of Cards' && (item.year >= 2013 || item.season >= 2)){
 					item.title = 'House of Cards US';
 				}
 				if(!shows[item.title]){

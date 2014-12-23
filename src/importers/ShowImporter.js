@@ -11,6 +11,9 @@ ShowImporter.prototype.importAll = function(dir, callback){
 	var self = this;
 	var Show = self.models.Show;
 	ShowParser.FolderParser(dir, function(err, shows){
+		if(err){
+			return callback(err);
+		}
 		Object.keys(shows).forEach(function(show){
 			if(show){
 				Show.findOne(show, function(err, result){
