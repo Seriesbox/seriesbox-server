@@ -15,6 +15,19 @@ module.exports = function home(app, models){
 			res.redirect('/auth/login');
 		}
 	});
+	app.get('/show/:show', function(req, res){
+		var Show = models.Show;
+		if(req.isAuthenticated()){
+			Show.find({title: req.params.show}, function(err, show){
+				res.render('shows/single', {
+					user: req.user,
+					show: show && show.length > 0 ? show : undefined
+				});
+			});
+		}else{
+			res.redirect('/auth/login');
+		}
+	});
 	app.get('/import', function(req, res){
 		var dir = '\/\\192.168.0.11\/htpc\/TV',
 			importer = new ShowImporter(traktConfig.apiKey, models);
