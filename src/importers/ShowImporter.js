@@ -29,6 +29,7 @@ ShowImporter.prototype.importAll = function(dir, callback){
 									var show = new Show(data);
 									show.save(function(err, result){
 										console.log(err, result);
+										self.addEpisodes(show, shows[show]);
 										callback(err, show);
 									});
 								}

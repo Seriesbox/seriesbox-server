@@ -71,6 +71,10 @@ var FolderParser = function(dir, callback){
 				if(item.title == 'The Office' && item.season > 3){
 					item.title = 'The Office US';
 				}
+				// HACK: House of Cards
+				if(item.title == 'House of Cards' && item.year >= 2013){
+					item.title = 'House of Cards US';
+				}
 				if(!shows[item.title]){
 					shows[item.title] = [];
 				}
