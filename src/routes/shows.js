@@ -18,10 +18,10 @@ module.exports = function home(app, models){
 	app.get('/show/:show', function(req, res){
 		var Show = models.Show;
 		if(req.isAuthenticated()){
-			Show.find({title: req.params.show}, function(err, show){
+			Show.findOne({url: req.params.show}, function(err, show){
 				res.render('shows/single', {
 					user: req.user,
-					show: show && show.length > 0 ? show : undefined
+					show: show
 				});
 			});
 		}else{
@@ -29,7 +29,7 @@ module.exports = function home(app, models){
 		}
 	});
 	app.get('/import', function(req, res){
-		var dir = '\/\\192.168.0.11\/htpc\/TV',
+		var dir = '\/\\192.168.0.11\/media\/TV',
 			importer = new ShowImporter(traktConfig.apiKey, models);
 		importer.importAll(dir, console.log);
 		res.end();

@@ -29,6 +29,7 @@ ShowImporter.prototype.importAll = function(dir, callback){
 								}
 								if(data && typeof data == 'object' && data.url && data.title){
 									data.url = data.url.replace('http://trakt.tv/show/', '');
+									data.url = data.url.replace('http://api.trakt.tv/shows/', '');
 									var show = new Show(data);
 									show.save(function(err, result){
 										console.log(err, result);

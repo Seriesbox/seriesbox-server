@@ -5,9 +5,15 @@
 {% if show %}
 <div class="show-single">
 	<div class="show">
-		<h2 class="show-title">{{ show.title }}</h2>
-		<div class="show-poster"><a href="/show/{{ show.url|replace('http://trakt.tv/show/', '') }}"><img src="{{ show.images.poster }}" class="pure-img"></a></div>
-		<h4 class="show-overview">{{ show.overview }}</h4>
+		<h1 class="show-title">{{ show.title }}</h1>
+		<div class="pure-u-1-2 pure-u-sm-1-4 pure-u-lg-1-6 pure-u-xl-1-12">	
+			<div class="show-poster"><a href="/show/{{ show.url|replace('http://trakt.tv/show/', '') }}"><img src="{{ show.images.poster }}" class="pure-img"></a></div>
+		</div>
+		<p class="show-overview">{{ show.overview }}</p>
+		<h2>Seasons</h2>
+		<ul class="seasons-list">
+			<li>Season 1</li>
+		</ul>
 	</div>
 </div>
 {% else %}
