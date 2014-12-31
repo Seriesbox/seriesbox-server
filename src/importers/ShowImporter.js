@@ -6,7 +6,22 @@ var ShowImporter = function(apiKey, models){
 	self.models = models;
 	trakt.init(apiKey);
 };
-ShowImporter.prototype.addEpisodes = function(show, episodes, callback){}; 
+ShowImporter.prototype.addEpisodes = function(show, episodes, callback){
+	var Episode = self.models.Episode;
+	if(show){
+		if(typeof episodes == 'array'){
+			episodes.forEach(function(ep){
+				if(ep.title && ep.season && ep.episodeName){
+					ep.show = show._id;
+					var ep = new Episode(ep);
+					ep.save(function(err, result){
+						console.log(err, result);
+					});
+				}
+			});
+		}
+	}
+}; 
 ShowImporter.prototype.importAll = function(dir, callback){
 	var self = this;
 	var Show = self.models.Show;

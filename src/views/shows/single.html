@@ -10,9 +10,16 @@
 			<div class="show-poster"><a href="/show/{{ show.url|replace('http://trakt.tv/show/', '') }}"><img src="{{ show.images.poster }}" class="pure-img"></a></div>
 		</div>
 		<p class="show-overview">{{ show.overview }}</p>
-		<h2>Seasons</h2>
+		<h2>Episodes</h2>
 		<ul class="seasons-list">
-			<li>Season 1</li>
+			{% for season in seasons %}
+			<li>Season {{ season.num }}</li>
+			<ul>
+				{% for episode in season.episodes %}
+					<li><a href="/watch/{{ show }}/{{ season }}/{{ episode }}">{{ episode }}</a></li>
+				{% endfor %}
+			</ul>
+			{% endfor %}
 		</ul>
 	</div>
 </div>
