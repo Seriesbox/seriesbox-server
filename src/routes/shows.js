@@ -21,11 +21,17 @@ module.exports = function home(app, models){
 			Episode = models.Episode;
 		if(req.isAuthenticated()){
 			Show.findOne({url: req.params.show}, function(err, show){
+				if(!show || show.length == 0){
+					return res.render('error.html', {
+						user: req.user,
+						message: 'Show not found'
+					});
+				}
 				//console.log(show)
-				if(show.seasons){
+				if(show && show.seasons){
 					show.seasons = show.seasons.sort(function(a, b){
 						return a.season > b.season;
-					})
+					});
 				}
 				Episode.find({'show': show._id}, function(err, episodes){
 					if(err){
