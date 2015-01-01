@@ -15,8 +15,8 @@
 			{% for season in seasons %}
 			<li>Season {{ season.num }}</li>
 			<ul>
-				{% for episode in season.episodes %}
-					<li><a href="/watch/{{ show }}/{{ season }}/{{ episode }}">{{ episode }}</a></li>
+				{% for ep in season.episodes %}
+					<li><strong>{{ ep.episode }}</strong> <a href="/watch/{{ episode._id }}">{{ ep.title }}</a></li>
 				{% endfor %}
 			</ul>
 			{% endfor %}

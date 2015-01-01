@@ -10,9 +10,10 @@ ShowImporter.prototype.addEpisodes = function(show, episodes, callback){
 	var self = this;
 	var Episode = self.models.Episode;
 	if(show){
-		if(typeof episodes == 'array'){
+		console.log(episodes);
+		if(Array.isArray(episodes)){
 			episodes.forEach(function(ep){
-				if(ep.title && ep.season && ep.episodeName){
+				if(ep.title && ep.season && ep.title){
 					ep.show = show._id;
 					var ep = new Episode(ep);
 					ep.save(function(err, result){
@@ -44,12 +45,12 @@ ShowImporter.prototype.importAll = function(dir, callback){
 									return callback(err);
 								}
 								if(data && typeof data == 'object' && data.url && data.title){
-									data.url = data.url.replace('http://trakt.tv/show/', '');
+									data.url = data.url.replace('http://trakt.tv/shows/', '');
 									data.url = data.url.replace('http://api.trakt.tv/shows/', '');
 									var show = new Show(data);
 									show.save(function(err, result){
-										console.log(err, result);
-										self.addEpisodes(show, shows[show]);
+										//console.log(err, result);
+										self.addEpisodes(show, shows[show.title]);
 										callback(err, show);
 									});
 								}

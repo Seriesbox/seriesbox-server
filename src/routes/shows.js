@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var ShowImporter = require('../importers/ShowImporter.js');
 var traktConfig = require('../../config/trakt');
 module.exports = function home(app, models){
@@ -16,13 +17,49 @@ module.exports = function home(app, models){
 		}
 	});
 	app.get('/show/:show', function(req, res){
-		var Show = models.Show;
+		var Show = models.Show,
+			Episode = models.Episode;
 		if(req.isAuthenticated()){
 			Show.findOne({url: req.params.show}, function(err, show){
-				res.render('shows/single', {
-					user: req.user,
-					show: show
-				});
+				//console.log(show)
+				if(show.seasons){
+					show.seasons = show.seasons.sort(function(a, b){
+						return a.season > b.season;
+					})
+				}
+				Episode.find({'show': show._id}, function(err, episodes){
+					if(err){
+						console.log(err);
+					}
+					//console.log('lol', episodes)
+					var seasons = {};
+					_.each(episodes, function (el){ 
+						var s = el.season,
+							e = el.episode;
+						if(!seasons[s]){
+							seasons[s] = {};
+							seasons[s].num = s;
+						}
+						var season = seasons[s];
+						if(!season.episodes){
+							season.episodes = [];
+						}
+						if(show.seasons && show.seasons[s] && show.seasons[s].episodes){
+							el = _.merge(el, show.seasons[s].episodes[e])
+							//console.log(show.seasons[s].episodes[e])
+						}
+						season.episodes.push(el);
+					});
+					episodes = episodes.sort(function(a, b){
+						return a.season > b.season && a.episode > a.episode;
+					});
+					res.render('shows/single', {
+						user: req.user,
+						show: show,
+						seasons: seasons,
+						episodes: episodes
+					});
+				})
 			});
 		}else{
 			res.redirect('/auth/login');

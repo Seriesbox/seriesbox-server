@@ -8,8 +8,7 @@ var Episode = new Schema({
 	},
 	show: {
 		type: Schema.ObjectId,
-		required: true,
-		ref: 'Show'
+		required: true
 	},
 	file: {
 		type: String,
