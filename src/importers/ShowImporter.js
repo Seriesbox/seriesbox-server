@@ -7,6 +7,7 @@ var ShowImporter = function(apiKey, models){
 	trakt.init(apiKey);
 };
 ShowImporter.prototype.addEpisodes = function(show, episodes, callback){
+	var self = this;
 	var Episode = self.models.Episode;
 	if(show){
 		if(typeof episodes == 'array'){

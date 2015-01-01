@@ -1,6 +1,6 @@
 module.exports = {
 	Account: require('./account'),
 	Invite: require('./Invite'),
-	Show: require('./Show')
+	Show: require('./Show'),
 	Episode: require('./Episode')
 };

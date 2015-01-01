@@ -5,11 +5,15 @@ var Episode = new Schema({
 	episodeName: {
 		type: String,
 		required: false
-	}
+	},
 	show: {
 		type: Schema.ObjectId,
 		required: true,
 		ref: 'Show'
+	},
+	file: {
+		type: String,
+		required: true
 	},
 	season: {
 		type: Number,
