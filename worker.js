@@ -88,6 +88,10 @@ function setup(app){
 			// Disable framing
 			res.setHeader('X-Frame-Options', 'SAMEORIGIN');
 
+	 		// Add user data to every request
+	 		if(req.user){
+	 			res.locals.user = req.user;
+	 		}
 			next();
 		});
 	}

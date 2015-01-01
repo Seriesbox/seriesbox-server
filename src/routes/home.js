@@ -1,9 +1,7 @@
 module.exports = function home(app, models){
 	app.get('/', function(req, res){
 		if(req.isAuthenticated()){
-			res.render('home/index', {
-				user: req.user
-			});
+			res.render('home/index');
 		}else{
 			res.redirect('/auth/login');
 		}

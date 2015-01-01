@@ -8,7 +8,6 @@ module.exports = function home(app, models){
 			Show.find(function(err, shows){
 				console.log(shows)
 				res.render('shows/index', {
-					user: req.user,
 					shows: shows
 				});
 			});
@@ -23,7 +22,6 @@ module.exports = function home(app, models){
 			Show.findOne({url: req.params.show}, function(err, show){
 				if(!show || show.length == 0){
 					return res.render('error.html', {
-						user: req.user,
 						message: 'Show not found'
 					});
 				}
@@ -60,7 +58,6 @@ module.exports = function home(app, models){
 						return a.season > b.season && a.episode > a.episode;
 					});
 					res.render('shows/single', {
-						user: req.user,
 						show: show,
 						seasons: seasons,
 						episodes: episodes
