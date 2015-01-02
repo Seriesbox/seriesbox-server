@@ -36,7 +36,7 @@ var getFiles = function(dir, callback){
 var FileParser = function(file){
 	var name = replaceExt(file, '');
 	// MAJOR HACK: parse-torrent-name wrongly parsing releases wrapped in []
-	name = name.replace(/(\[)(.){1,20}(\]).(-||_)/, '');
+	//name = name.replace(/(\[)(.){1,20}(\]).(-||_)/, '');
 	parsed = ptn(name);
 	return parsed;
 };
@@ -79,10 +79,6 @@ var FolderParser = function(dir, callback){
 				}
 				// Lowercase show title to avoid duplicates in array
 				item.title = item.title.toLowerCase();
-				// HACK: Language gets parsed as episodeName (?)
-				if(item && item.episodeName && item.episodeName == 'rus eng'){
-					delete item.episodeName;
-				}
 				if(!shows[item.title]){
 					shows[item.title] = [];
 				}
