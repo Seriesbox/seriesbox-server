@@ -13,7 +13,7 @@ ShowImporter.prototype.addEpisodes = function(show, episodes, callback){
 		console.log(episodes);
 		if(Array.isArray(episodes)){
 			episodes.forEach(function(ep){
-				if(ep.title && ep.season && ep.title){
+				if(ep.title && ep.season && ep.episode){
 					ep.show = show._id;
 					var ep = new Episode(ep);
 					ep.save(function(err, result){

@@ -1,4 +1,5 @@
-var fs = require('fs'),
+var fs = require('graceful-fs'),
+	findit = require('findit'),
 	path = require('path'),
 	_ = require('lodash');
 	ptn = require('parse-torrent-name'),
@@ -7,43 +8,40 @@ var fs = require('fs'),
 
 var SUPPORTED_FILETYPES = new RegExp("(avi|mkv|mpeg|mov|mp4|m4v|wmv)$","g");  //Pipe seperated
 
-var walk = function(dir, done) {
+var getFiles = function(dir, callback){
 	var results = [];
-	fs.readdir(dir, function(err, list) {
-		if (err)
-			return done(err);
-		var i = 0;
-		(function next() {
-			var file = list[i++];
-			if (!file)
-				return done(null, results);
-			file = dir + '/' + file;
-			fs.stat(file, function(err, stat) {
-				if (stat && stat.isDirectory()) {
-					walk(file, function(err, res) {
-						results = results.concat(res);
-						next();
-					});
-				} else {
-					var ext = file.split(".");
-					ext = ext[ext.length - 1];
-					if (ext.match(SUPPORTED_FILETYPES)) {
-						results.push(file);
-					}
-					next();
-				}
-			});
-		})();
+	var finder = findit(dir, {
+		fs: fs
 	});
+
+	finder.on('file', function(file, stat){
+		if(file){
+			file = path.basename(file);
+			var ext = file.split(".");
+			ext = ext[ext.length - 1];
+			if(ext.match(SUPPORTED_FILETYPES)){
+				results.push(file);
+			}
+		}
+	});
+
+	finder.on('error', function(err){
+
+	});
+
+    finder.on('end', function(err){
+		callback(err, results);
+    });
 };
 var FileParser = function(file){
 	var name = replaceExt(file, '');
+	// MAJOR HACK: parse-torrent-name wrongly parsing releases wrapped in []
+	name = name.replace(/(\[)(.){1,20}(\]).(-||_)/, '');
 	parsed = ptn(name);
-	//console.log(info);
-	return ptn(name);
+	return parsed;
 };
 var FolderParser = function(dir, callback){
-	walk(dir, function(err, files){
+	getFiles(dir, function(err, files){
 		if(err){
 			return callback(err);
 		}
@@ -75,6 +73,16 @@ var FolderParser = function(dir, callback){
 				if(item.title == 'House of Cards' && (item.year >= 2013 || item.season >= 2)){
 					item.title = 'House of Cards US';
 				}
+				// HACK: HIMYM is How I Met Your Mother
+				if(item.title == 'HIMYM'){
+					item.title = 'How I Met Your Mother';
+				}
+				// Lowercase show title to avoid duplicates in array
+				item.title = item.title.toLowerCase();
+				// HACK: Language gets parsed as episodeName (?)
+				if(item && item.episodeName && item.episodeName == 'rus eng'){
+					delete item.episodeName;
+				}
 				if(!shows[item.title]){
 					shows[item.title] = [];
 				}
@@ -93,4 +101,4 @@ var FolderParser = function(dir, callback){
 module.exports = {
 	FolderParser: FolderParser
 };
-//console.log(FolderParser('\/\\192.168.0.11\/htpc\/TV'));
+//FolderParser('\/\\192.168.0.11\/media\/TV', console.log);
