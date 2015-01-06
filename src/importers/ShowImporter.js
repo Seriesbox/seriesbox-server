@@ -70,17 +70,23 @@ ShowImporter.prototype.importAll = function(dir, callback){
 											if(err){
 												return console.log(err);
 											}
-											async.series([
-												function(){	
+											async.waterfall([
+												function(next){	
+													var i = 0;
 													shows[origShow].forEach(function(episode){
 														if(data.seasons
 															&& episode
 															&& episode.season
 															&& episode.episode
-															&& data.seasons[episode.season] && 
-																data.seasons[episode.season][episode.episode]){
-																data.seasons[episode.season][episode.episode].file = episode.file;
+															&& data.seasons[episode.season]
+															&& data.seasons[episode.season].episodes
+															&& data.seasons[episode.season].episodes[episode.episode]){
+																data.seasons[episode.season].episodes[episode.episode].file = episode.file;
 														}
+														if(i == shows[origShow].length - 1){
+															next();
+														}
+														i++;
 													});
 												},
 												function(){	
