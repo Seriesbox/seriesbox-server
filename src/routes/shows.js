@@ -55,7 +55,7 @@ module.exports = function home(app, models){
 						season.episodes.push(el);
 					});
 					episodes = episodes.sort(function(a, b){
-						return a.season > b.season && a.episode > a.episode;
+						return a.season > b.season && a.episode > b.episode;
 					});
 					res.render('shows/single', {
 						show: show,
@@ -71,7 +71,7 @@ module.exports = function home(app, models){
 	app.get('/import', function(req, res){
 		var dir = '\/\\192.168.0.11\/media\/TV',
 			importer = new ShowImporter(traktConfig.apiKey, models);
-		importer.importAll(dir, console.log);
+		importer.importAll(dir, function(){});
 		res.end();
 	});
 };

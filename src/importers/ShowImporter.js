@@ -33,28 +33,38 @@ ShowImporter.prototype.importAll = function(dir, callback){
 		}
 		Object.keys(shows).forEach(function(show){
 			if(show){
-				Show.findOne(show, function(err, result){
+				var origShow = show;
+				Show.findOne({title: show}, function(err, result){
+						if(err) return console.log(err);
 						if(!err && (!result || !result.length)){
 							console.log(show.replace(/\s/g, '-'))
-							trakt.showSummary({
-								'title': encodeURI(show.replace(/\s/g, '-')),
-								'extended': false
-							}, function(err, data){
-								if(err){
-									console.log(err)
-									return callback(err);
-								}
-								if(data && typeof data == 'object' && data.url && data.title){
-									data.url = data.url.replace('http://trakt.tv/shows/', '');
-									data.url = data.url.replace('http://api.trakt.tv/shows/', '');
-									var show = new Show(data);
-									show.save(function(err, result){
-										//console.log(err, result);
-										self.addEpisodes(show, shows[show.title]);
-										callback(err, show);
-									});
-								}
-							});
+							setTimeout(function(){
+								trakt.showSummary({
+									'title': encodeURI(show.replace(/\s/g, '-')),
+									'extended': false
+								}, function(err, data){
+									if(err){
+										return console.log(err);
+									}
+									if(data && typeof data == 'object' && data.url && data.title){
+										data.url = data.url.replace('http://trakt.tv/shows/', '');
+										data.url = data.url.replace('http://api.trakt.tv/shows/', '');
+										var show = new Show(data);
+										if(show){
+											show.save(function(err, result){
+												if(err){
+													return console.log(err);
+												}
+												//console.log(err, result);
+												if(shows[origShow]){
+													self.addEpisodes(show, shows[origShow]);
+												}
+												callback(err, show);
+											});
+										}
+									}
+								});
+							}, 1000);
 						}
 				});
 			}else{

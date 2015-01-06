@@ -48,12 +48,14 @@ var FolderParser = function(dir, callback){
 		var list;
 		files = files.filter(junk.not);
 		list = _.each(files, function(file, index, list){
-			var parsedFile = FileParser(path.basename(file));
-			parsedFile.file = path.basename(file);
-			if(file !== parsedFile && typeof parsedFile == 'object' && parsedFile.title){
-				list[index] = parsedFile;
-			}else{
-				list[index] = null;
+			if(file){			
+				var parsedFile = FileParser(path.basename(file));
+				parsedFile.file = path.basename(file);
+				if(file !== parsedFile && typeof parsedFile == 'object' && parsedFile.title){
+					list[index] = parsedFile;
+				}else{
+					list[index] = null;
+				}
 			}
 			return file;
 		});
@@ -71,6 +73,9 @@ var FolderParser = function(dir, callback){
 				}
 				// HACK: House of Cards
 				if(item.title == 'House of Cards' && (item.year >= 2013 || item.season >= 2)){
+					item.title = 'House of Cards US';
+				}
+				if(item.title == 'hoc' && item.season >= 2){
 					item.title = 'House of Cards US';
 				}
 				// HACK: HIMYM is How I Met Your Mother
