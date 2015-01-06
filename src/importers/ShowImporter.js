@@ -1,4 +1,5 @@
 var _ = require('lodash'),
+	async = require('async'),
 	trakt = require('node-trakt');
 var ShowParser = require('../parsers/tv/Parser.js');
 var ShowImporter = function(apiKey, models){
@@ -6,6 +7,7 @@ var ShowImporter = function(apiKey, models){
 	self.models = models;
 	trakt.init(apiKey);
 };
+
 ShowImporter.prototype.addEpisodes = function(show, episodes, callback){
 	var self = this;
 	var Episode = self.models.Episode;
@@ -22,6 +24,21 @@ ShowImporter.prototype.addEpisodes = function(show, episodes, callback){
 				}
 			});
 		}
+};
+ShowImporter.prototype.addEpisodeFile = function(show, ep, callback){
+	var self = this;
+	var Episode = self.models.Episode;
+	if(show){
+			if(ep.title && ep.season && ep.episode){
+				Episode.update({
+					show: show._id,
+					episode: ep.episode,
+					season: ep.season
+				}, {file: ep.file}, function(err, result){
+					console.log(err, result)
+				});
+			}
+		}
 	}
 }; 
 ShowImporter.prototype.importAll = function(dir, callback){
@@ -34,39 +51,59 @@ ShowImporter.prototype.importAll = function(dir, callback){
 		Object.keys(shows).forEach(function(show){
 			if(show){
 				var origShow = show;
-				Show.findOne({title: show}, function(err, result){
-						if(err) return console.log(err);
-						if(!err && (!result || !result.length)){
-							console.log(show.replace(/\s/g, '-'))
-							setTimeout(function(){
-								trakt.showSummary({
-									'title': encodeURI(show.replace(/\s/g, '-')),
-									'extended': false
-								}, function(err, data){
-									if(err){
-										return console.log(err);
-									}
-									if(data && typeof data == 'object' && data.url && data.title){
-										data.url = data.url.replace('http://trakt.tv/shows/', '');
-										data.url = data.url.replace('http://api.trakt.tv/shows/', '');
-										var show = new Show(data);
-										if(show){
-											show.save(function(err, result){
-												if(err){
-													return console.log(err);
-												}
-												//console.log(err, result);
-												if(shows[origShow]){
-													self.addEpisodes(show, shows[origShow]);
-												}
-												callback(err, show);
-											});
-										}
-									}
-								});
-							}, 1000);
+				setTimeout(function(){
+					trakt.showSummary({
+						'title': encodeURI(show.replace(/\s/g, '-')),
+						'extended': false
+					}, function(err, data){
+						if(err){
+							return console.log(err);
 						}
-				});
+						if(data && typeof data == 'object' && data.url && data.title){
+							data.url = data.url.replace('http://trakt.tv/shows/', '');
+							data.url = data.url.replace('http://api.trakt.tv/shows/', '');
+							Show.findOne({title: data.title}, function(err, result){
+								if(!err || (result && !result.length)){
+									var show = new Show(data);
+									if(show){
+										show.save(function(err, result){
+											if(err){
+												return console.log(err);
+											}
+											async.series([
+												function(){	
+													shows[origShow].forEach(function(episode){
+														if(data.seasons
+															&& episode
+															&& episode.season
+															&& episode.episode
+															&& data.seasons[episode.season] && 
+																data.seasons[episode.season][episode.episode]){
+																data.seasons[episode.season][episode.episode].file = episode.file;
+														}
+													});
+												},
+												function(){	
+													if(data.seasons){
+														data.seasons.forEach(function(season){
+															if(season && season.episodes){
+																self.addEpisodes(show, season.episodes);
+															}
+														});
+													}
+												}
+											]);
+											//console.log(err, result);
+											callback(err, show);
+										});
+									}
+								}else{
+									callback(err);
+								}
+							});
+						}
+					});
+				}, 1000);
 			}else{
 				callback(new Error('TV show not found'));
 			}

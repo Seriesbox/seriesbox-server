@@ -36,7 +36,7 @@ var getFiles = function(dir, callback){
 var FileParser = function(file){
 	var name = replaceExt(file, '');
 	// MAJOR HACK: parse-torrent-name wrongly parsing releases wrapped in []
-	//name = name.replace(/(\[)(.){1,20}(\]).(-||_)/, '');
+	name = name.replace(/(\[)(.){1,20}(\]).(-||_)/, '');
 	parsed = ptn(name);
 	return parsed;
 };

@@ -12,7 +12,7 @@ var Episode = new Schema({
 	},
 	file: {
 		type: String,
-		required: true
+		required: false
 	},
 	season: {
 		type: Number,

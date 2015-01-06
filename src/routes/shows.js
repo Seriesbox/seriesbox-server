@@ -28,7 +28,12 @@ module.exports = function home(app, models){
 				//console.log(show)
 				if(show && show.seasons){
 					show.seasons = show.seasons.sort(function(a, b){
-						return a.season > b.season;
+							if(a.season > b.season){
+								return 1;
+							}else if(a.season < b.season){
+								return -1;
+							}
+							return 0;
 					});
 				}
 				Episode.find({'show': show._id}, function(err, episodes){
@@ -48,19 +53,29 @@ module.exports = function home(app, models){
 						if(!season.episodes){
 							season.episodes = [];
 						}
-						if(show.seasons && show.seasons[s] && show.seasons[s].episodes){
-							el = _.merge(el, show.seasons[s].episodes[e])
-							//console.log(show.seasons[s].episodes[e])
+						if(show && show.seasons){
+							if(show.seasons && show.seasons[s] && show.seasons[s].episodes){
+								el = _.merge(el, show.seasons[s].episodes[e-1])
+								//console.log(show.seasons[s].episodes[e])
+							}
 						}
-						season.episodes.push(el);
+						season.episodes.push(el)
 					});
-					episodes = episodes.sort(function(a, b){
-						return a.season > b.season && a.episode > b.episode;
+					seasons = _.each(seasons, function(season){
+						if(season){
+							season.episodes = season.episodes.sort(function(a, b){							
+								if(a.episode > b.episode){
+									return 1;
+								}else if(a.episode < b.episode){
+									return -1;
+								}
+								return 0;
+							});
+						}
 					});
 					res.render('shows/single', {
 						show: show,
-						seasons: seasons,
-						episodes: episodes
+						seasons: seasons
 					});
 				})
 			});
