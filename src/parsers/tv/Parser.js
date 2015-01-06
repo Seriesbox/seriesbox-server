@@ -64,7 +64,7 @@ var FolderParser = function(dir, callback){
 		_.each(list,  function(item){
 			if(item && item.title && item.season){
 				// HACK: All DW episodes after 2005 are separated
-				if(item.title == 'Doctor Who' && item.year == '2005'){
+				if(item.title == 'Doctor Who'){
 					item.title = 'Doctor Who 2005';
 				}
 				// HACK: The Office
