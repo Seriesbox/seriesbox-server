@@ -80,8 +80,8 @@ ShowImporter.prototype.importAll = function(dir, callback){
 															&& episode.episode
 															&& data.seasons[episode.season]
 															&& data.seasons[episode.season].episodes
-															&& data.seasons[episode.season].episodes[episode.episode]){
-																data.seasons[episode.season].episodes[episode.episode].file = episode.file;
+															&& data.seasons[episode.season].episodes[episode.episode - 1]){
+																data.seasons[episode.season].episodes[episode.episode - 1].file = episode.file;
 														}
 														if(i == shows[origShow].length - 1){
 															next();
