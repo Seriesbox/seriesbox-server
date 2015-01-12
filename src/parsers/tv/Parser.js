@@ -16,7 +16,7 @@ var getFiles = function(dir, callback){
 
 	finder.on('file', function(file, stat){
 		if(file){
-			file = path.basename(file);
+			file = file.replace(dir, '');
 			var ext = file.split(".");
 			ext = ext[ext.length - 1];
 			if(ext.match(SUPPORTED_FILETYPES)){
@@ -34,7 +34,7 @@ var getFiles = function(dir, callback){
     });
 };
 var FileParser = function(file){
-	var name = replaceExt(file, '');
+	var name = replaceExt(path.basename(file), '');
 	// MAJOR HACK: parse-torrent-name wrongly parsing releases wrapped in []
 	name = name.replace(/(\[)(.){1,20}(\]).(-||_)/, '');
 	parsed = ptn(name);
@@ -50,7 +50,7 @@ var FolderParser = function(dir, callback){
 		list = _.each(files, function(file, index, list){
 			if(file){			
 				var parsedFile = FileParser(path.basename(file));
-				parsedFile.file = path.basename(file);
+				parsedFile.file = file.replace(dir, '');
 				if(file !== parsedFile && typeof parsedFile == 'object' && parsedFile.title){
 					list[index] = parsedFile;
 				}else{

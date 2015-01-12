@@ -16,7 +16,7 @@
 			<li>Season {{ season.num }}</li>
 			<ul>
 				{% for ep in season.episodes %}
-					<li><strong>{{ ep.episode }}</strong> {% if ep.file %}<a href="/watch/{{ ep._id.toString() }}">{{ ep.title }}</a>{% else %} {{ ep.title }} {% endif %}</li>
+					<li><strong>{{ ep.episode }}</strong> {% if ep.file %}<a href="/watch/{{ ep._id.toString() }}">{{ ep.title }}</a>{% else %} {{ ep.title || 'Episode ' + ep.episode }} {% endif %}</li>
 				{% endfor %}
 			</ul>
 			{% endfor %}

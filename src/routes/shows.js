@@ -1,12 +1,13 @@
-var _ = require('lodash');
+var _ = require('lodash'),
+	ffmpeg = require('fluent-ffmpeg');
 var ShowImporter = require('../importers/ShowImporter.js');
 var traktConfig = require('../../config/trakt');
+var directoriesConfig = require('../../config/directories');
 module.exports = function home(app, models){
 	app.get('/shows', function(req, res){
 		var Show = models.Show;
 		if(req.isAuthenticated()){
 			Show.find(function(err, shows){
-				console.log(shows)
 				res.render('shows/index', {
 					shows: shows
 				});
@@ -83,8 +84,77 @@ module.exports = function home(app, models){
 			res.redirect('/auth/login');
 		}
 	});
+	app.get('/watch/:episodeId', function(req, res){
+		var dir = directoriesConfig.tv,
+			Episode = models.Episode;
+		if(req.isAuthenticated()){
+			Episode
+			.findOne({'_id': req.params.episodeId})
+			.populate('show')
+			.exec(function(err, ep){
+				console.log(ep)
+				res.render('shows/episode', {
+					show: {},
+					ep: ep
+				});
+			});
+		}else{
+			res.redirect('/auth/login');
+		}
+	});
+	app.get('/transcode/:episodeId', function(req, res){
+		var dir = directoriesConfig.tv,
+			Episode = models.Episode;
+		if(req.isAuthenticated()){
+			Episode
+			.findOne({'_id': req.params.episodeId})
+			.populate('show')
+			.exec(function(err, ep){
+				if(ep && ep.file){
+					var options = [
+						'-threads 0',
+						'-coder 0',
+						'-flags -loop',
+						'-pix_fmt yuv420p',
+						'-subq 0',
+						'-sc_threshold 0',
+						'-keyint_min 150',
+						'-deinterlace',
+						'-maxrate 10000000',
+						'-bufsize 10000000',
+						'-acodec aac',
+						'-strict experimental',
+						'-frag_duration 1000',
+						'-movflags +frag_keyframe+empty_moov',
+						'-profile:v baseline'
+					];
+					// Force lossless
+					options.push('-crf 0');
+					res.contentType('video/mp4');
+					console.log(ep.file)
+					var proc = ffmpeg({source: dir + ep.file})
+					.format('mp4')
+					.audioCodec('aac')
+					.addOptions(options)
+					.on('start', function(commandLine) {
+						console.log('Spawned Ffmpeg with command: ' + commandLine);
+					})
+					.on('end', function(){
+						console.log('file has been converted succesfully');
+					})
+					.on('error', function(err){
+						console.log('an error happened: ' + err.message);
+					})
+					.pipe(res, {end:true});
+
+				}
+			});
+		}else{
+			res.redirect('/auth/login');
+		}
+	});
 	app.get('/import', function(req, res){
-		var dir = '\/\\192.168.0.11\/media\/TV',
+		var dir = directoriesConfig.tv,
 			importer = new ShowImporter(traktConfig.apiKey, models);
 		importer.importAll(dir, function(){});
 		res.end();

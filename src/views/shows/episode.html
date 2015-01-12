@@ -1,0 +1,19 @@
+{% set scripts = ['pages/shows.js'] %}
+{% extends '../layouts/base.html' %}
+{% set customClasses = ['episode-page'] %}
+{% block content %}
+{% if show %}
+<div class="show-single">
+	<div class="show">
+		<h1 class="show-title">{{ ep.episodeName || 'Episode ' + ep.episode }}</h1>
+		<div class="pure-u-1-2 pure-u-sm-1-4 pure-u-lg-1-6 pure-u-xl-1-12">	
+			<div class="show-poster"><a href="/watch/{{ ep._id }}"><img src="{{ show.images.poster }}" class="pure-img"></a></div>
+		</div>
+		<p class="episode-overview">{{ ep.overview }}</p>
+		<h2>Episodes</h2>
+	</div>
+</div>
+{% else %}
+	<p>Episode not found</p>
+{% endif %}
+{% endblock %}

@@ -15,13 +15,25 @@ ShowImporter.prototype.addEpisodes = function(show, episodes, callback){
 		console.log(episodes);
 		if(Array.isArray(episodes)){
 			episodes.forEach(function(ep){
-				if(ep.title && ep.season && ep.episode){
-					ep.show = show._id;
-					var ep = new Episode(ep);
-					ep.save(function(err, result){
-						console.log(err, result);
-					});
-				}
+				Episode.findOne({
+					show: show._id,
+					seasons: ep.season,
+					episode: ep.episode
+				}, function(err, e){
+					if(!ep){
+						var ep = this.ep;
+					}
+					console.log(self)
+					if(!e || !e.length){
+						if(ep.title && ep.season && ep.episode){
+							ep.show = show._id;
+							var ep = new Episode(ep);
+							ep.save(function(err, result){
+								console.log(err, result);
+							});
+						}
+					}
+				}.bind({ep: ep}));
 			});
 		}
 };
@@ -65,44 +77,47 @@ ShowImporter.prototype.importAll = function(dir, callback){
 							Show.findOne({title: data.title}, function(err, result){
 								if(!err || (result && !result.length)){
 									var show = new Show(data);
-									if(show){
-										show.save(function(err, result){
-											if(err){
-												return console.log(err);
-											}
-											async.waterfall([
-												function(next){	
-													var i = 0;
-													shows[origShow].forEach(function(episode){
-														if(data.seasons
+								}else{
+									show = result;
+								}
+								if(show){
+									show.save(function(err, result){
+										// If this is not an duplicate show error
+										if(err && err.code !== '11000'){
+											//return console.log(err);
+										}
+										async.waterfall([
+											function(next){	
+												var i = 0;
+												shows[origShow].forEach(function(episode){
+													if(data.seasons
 															&& episode
 															&& episode.season
 															&& episode.episode
 															&& data.seasons[episode.season]
 															&& data.seasons[episode.season].episodes
 															&& data.seasons[episode.season].episodes[episode.episode - 1]){
-																data.seasons[episode.season].episodes[episode.episode - 1].file = episode.file;
-														}
-														if(i == shows[origShow].length - 1){
-															next();
-														}
-														i++;
-													});
-												},
-												function(){	
-													if(data.seasons){
-														data.seasons.forEach(function(season){
-															if(season && season.episodes){
-																self.addEpisodes(show, season.episodes);
-															}
-														});
+															data.seasons[episode.season].episodes[episode.episode - 1].file = episode.file;
 													}
+													if(i == shows[origShow].length - 1){
+														next();
+													}
+													i++;
+												});
+											},
+											function(){	
+												if(data.seasons){
+													data.seasons.forEach(function(season){
+														if(season && season.episodes){
+															self.addEpisodes(show, season.episodes);
+														}
+													});
 												}
+											}
 											]);
 											//console.log(err, result);
 											callback(err, show);
 										});
-									}
 								}else{
 									callback(err);
 								}
