@@ -28,6 +28,7 @@
     "email-regex": "^1.0.0",
     "express": "^5.0.0-alpha.1",
     "express-session": "^1.9.1",
+    "findit": "^2.0.0",
     "flash": "^1.1.0",
     "fluent-ffmpeg": "^2.0.0-rc3",
     "graceful-fs": "^3.0.5",
