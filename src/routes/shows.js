@@ -128,8 +128,8 @@ module.exports = function home(app, models){
 						'-movflags +frag_keyframe+empty_moov',
 						'-profile:v baseline'
 					];
-					// Force lossless
-					//options.push('-crf 0');
+					// High quality, not lossless
+					options.push('-g 52', '-crf 22', '-ar 48000', '-ab 320k');
 					res.contentType('video/mp4');
 					console.log(ep.file)
 					var proc = ffmpeg({source: dir + ep.file})
