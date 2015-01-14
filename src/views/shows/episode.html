@@ -7,13 +7,13 @@
 	<div class="show">
 		<h1 class="show-title">{{ ep.episodeName || 'Episode ' + ep.episode }}</h1>
 		<div class="pure-u-1-2 pure-u-sm-1-4 pure-u-lg-1-6 pure-u-xl-1-12">	
-			<div class="show-poster"><a href="/watch/{{ ep._id }}"><img src="{{ show.images.poster }}" class="pure-img"></a></div>
+			<div class="show-poster"><a href="/watch/{{ ep._id.toString() }}"><img src="{{ show.images.poster }}" class="pure-img"></a></div>
 		</div>
 		<p class="episode-overview">{{ ep.overview }}</p>
 		<video id="episode-video" class="video-js vjs-default-skin" controls
  preload="auto" width="640" height="264" poster=""
  data-setup='{}'>
- 		<source src="/transcode/{{ ep._id }}" type='video/mp4'>
+ 		<source src="/transcode/{{ ep._id.toString() }}" type='video/mp4'>
  		<p class="vjs-no-js">
  			To view this video please enable JavaScript, and consider upgrading to a web browser
  			that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
