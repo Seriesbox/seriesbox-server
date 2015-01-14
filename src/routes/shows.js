@@ -112,17 +112,17 @@ module.exports = function home(app, models){
 			.exec(function(err, ep){
 				if(ep && ep.file){
 					var options = [
-						'-threads 0',
+						//'-threads 0',
 						//'-coder 0',
 						//'-flags -loop',
-						'-pix_fmt yuv420p',
+						//'-pix_fmt yuv420p',
 						//'-subq 0',
 						//'-sc_threshold 0',
 						//'-keyint_min 150',
-						'-deinterlace',
+						//'-deinterlace',
 						//'-maxrate 10000000',
 						//'-bufsize 10000000',
-						'-acodec aac',
+						//'-acodec aac',
 						'-strict experimental',
 						//'-frag_duration 1000',
 						'-movflags faststart+frag_keyframe+empty_moov',
