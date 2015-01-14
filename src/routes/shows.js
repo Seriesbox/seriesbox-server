@@ -133,7 +133,7 @@ module.exports = function home(app, models){
 					res.contentType('video/mp4');
 					console.log(ep.file)
 					var proc = ffmpeg({source: dir + ep.file})
-					.format('h264')
+					.format('mp4')
 					.audioCodec('aac')
 					.addOptions(options)
 					.on('start', function(commandLine) {
