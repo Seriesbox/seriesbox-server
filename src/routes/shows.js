@@ -112,28 +112,28 @@ module.exports = function home(app, models){
 			.exec(function(err, ep){
 				if(ep && ep.file){
 					var options = [
-						//'-threads 0',
-						//'-coder 0',
-						//'-flags -loop',
-						//'-pix_fmt yuv420p',
-						//'-subq 0',
-						//'-sc_threshold 0',
-						//'-keyint_min 150',
-						//'-deinterlace',
-						//'-maxrate 10000000',
-						//'-bufsize 10000000',
-						//'-acodec aac',
+						'-threads 0',
+						'-coder 0',
+						'-flags -loop',
+						'-pix_fmt yuv420p',
+						'-subq 0',
+						'-sc_threshold 0',
+						'-keyint_min 150',
+						'-deinterlace',
+						'-maxrate 10000000',
+						'-bufsize 10000000',
+						'-acodec aac',
 						'-strict experimental',
-						//'-frag_duration 1000',
-						'-movflags faststart+frag_keyframe+empty_moov',
+						'-frag_duration 1000',
+						'-movflags +frag_keyframe+empty_moov',
 						'-profile:v baseline'
 					];
 					// High quality, not lossless
-					//options.push('-g 52', '-crf 22', '-ar 48000', '-ab 320k');
+					options.push('-g 52', '-crf 22', '-ar 48000', '-ab 320k');
 					res.contentType('video/mp4');
 					console.log(ep.file)
 					var proc = ffmpeg({source: dir + ep.file})
-					.format('mp4')
+					.format('libx264')
 					.audioCodec('aac')
 					.addOptions(options)
 					.on('start', function(commandLine) {
