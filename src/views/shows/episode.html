@@ -10,7 +10,15 @@
 			<div class="show-poster"><a href="/watch/{{ ep._id }}"><img src="{{ show.images.poster }}" class="pure-img"></a></div>
 		</div>
 		<p class="episode-overview">{{ ep.overview }}</p>
-		<h2>Episodes</h2>
+		<video id="episode-video" class="video-js vjs-default-skin" controls
+ preload="auto" width="640" height="264" poster=""
+ data-setup='{}'>
+ 		<source src="/transcode/{{ ep._id }}" type='video/mp4'>
+ 		<p class="vjs-no-js">
+ 			To view this video please enable JavaScript, and consider upgrading to a web browser
+ 			that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+ 		</p>
+ 	</video>
 	</div>
 </div>
 {% else %}
