@@ -113,8 +113,8 @@ module.exports = function home(app, models){
 				if(ep && ep.file){
 					var options = [
 						'-threads 0',
-						'-coder 0',
-						'-flags -loop',
+						//'-coder 0',
+						//'-flags -loop',
 						'-pix_fmt yuv420p',
 						//'-subq 0',
 						//'-sc_threshold 0',
@@ -125,11 +125,11 @@ module.exports = function home(app, models){
 						'-acodec aac',
 						'-strict experimental',
 						//'-frag_duration 1000',
-						'-movflags +frag_keyframe+empty_moov',
+						'-movflags faststart+frag_keyframe+empty_moov',
 						'-profile:v baseline'
 					];
 					// High quality, not lossless
-					options.push('-g 52', '-crf 22', '-ar 48000', '-ab 320k');
+					//options.push('-g 52', '-crf 22', '-ar 48000', '-ab 320k');
 					res.contentType('video/mp4');
 					console.log(ep.file)
 					var proc = ffmpeg({source: dir + ep.file})
