@@ -122,11 +122,10 @@ module.exports = function home(app, models){
 						'-deinterlace',
 						'-maxrate 10000000',
 						'-bufsize 10000000',
-						'-acodec aac',
 						'-strict experimental',
 						'-frag_duration 1000',
 						'-movflags +frag_keyframe+empty_moov',
-						'-profile:v high444'
+						'-profile:v baseline'
 					];
 					// Force lossless
 					options.push('-crf 0');
@@ -134,7 +133,6 @@ module.exports = function home(app, models){
 					console.log(ep.file)
 					var proc = ffmpeg({source: dir + ep.file})
 					.format('mp4')
-					.audioCodec('aac')
 					.addOptions(options)
 					.on('start', function(commandLine) {
 						console.log('Spawned Ffmpeg with command: ' + commandLine);
