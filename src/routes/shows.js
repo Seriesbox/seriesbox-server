@@ -126,7 +126,7 @@ module.exports = function home(app, models){
 						'-strict experimental',
 						'-frag_duration 1000',
 						'-movflags +frag_keyframe+empty_moov',
-						'-profile:v baseline'
+						'-profile:v high444'
 					];
 					// Force lossless
 					options.push('-crf 0');
