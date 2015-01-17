@@ -5,10 +5,11 @@
 {% if show %}
 <div class="show-single">
 	<div class="show">
-		<h1 class="show-title">{{ ep.episodeName || 'Episode ' + ep.episode }}</h1>
-		<div class="pure-u-1-2 pure-u-sm-1-4 pure-u-lg-1-6 pure-u-xl-1-12">	
+		<h1 class="show-title">{{ show.title }}</h1>
+		<div class="pure-u-1-2 pure-u-sm-1-4 pure-u-lg-1-6 pure-u-xl-1-12 show-poster-wrap">	
 			<div class="show-poster"><a href="/watch/{{ ep._id.toString() }}"><img src="{{ show.images.poster }}" class="pure-img"></a></div>
 		</div>
+		<h2 class="episode-title">{{ ep.episodeName || 'Episode ' + ep.episode }}</h2>
 		<p class="episode-overview">{{ ep.overview }}</p>
 		<video id="episode-video" class="video-js vjs-default-skin" controls
  preload="auto" width="640" height="264" poster=""

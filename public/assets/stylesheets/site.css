@@ -56,6 +56,33 @@ input,
 .pure-form legend {
   font-size: 21px;
 }
+#search-bar:after {
+  cler: both;
+}
+#search-bar {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+}
+input#search {
+  -webkit-box-shadow: inset 0 2px 3px rgba(31, 106, 171, 0.05), 0 1px 1px rgba(255, 255, 255, 0.3);
+  -webkit-transition: 0.5s all ease-in-out !important;
+  font-size: 1.1em;
+  color: #aab7c0;
+  padding: 10px 10px 10px 30px;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 0;
+  margin-top: 5px;
+  min-width: 350px;
+}
+#search-bar .fa-search {
+  margin: 10px 0 0 10px;
+  color: black;
+  position: absolute;
+  top: 10px;
+  left: 0px;
+}
 #top .pure-menu {
   background: #2780e3;
   color: #ffffff;
@@ -210,6 +237,9 @@ input,
   background: #fff;
   border: 1px #fff solid;
   border-radius: 3px;
+}
+.episode-page .show-poster-wrap {
+  float: right;
 }
 .show-single:after {
   clear: both;

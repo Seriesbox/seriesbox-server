@@ -56,7 +56,7 @@ module.exports = function home(app, models){
 						}
 						if(show && show.seasons){
 							if(show.seasons && show.seasons[s] && show.seasons[s].episodes){
-								el = _.merge(el, show.seasons[s].episodes[e-1])
+								el = _.merge(el, show.seasons[s].episodes[e - 1])
 								//console.log(show.seasons[s].episodes[e])
 							}
 						}
@@ -86,17 +86,54 @@ module.exports = function home(app, models){
 	});
 	app.get('/watch/:episodeId', function(req, res){
 		var dir = directoriesConfig.tv,
+			Show = models.Show,
 			Episode = models.Episode;
 		if(req.isAuthenticated()){
 			Episode
 			.findOne({'_id': req.params.episodeId})
-			.populate('show')
 			.exec(function(err, ep){
-				console.log(ep)
-				res.render('shows/episode', {
-					show: {},
-					ep: ep
-				});
+				console.log(ep);
+				if(err){
+					return res.redirect('/');
+				}
+				Show.findOne({'_id': ep.show}, function(err, show){
+					if(err){
+						return res.redirect('/');
+					}
+					console.log(show)
+					seasons = show.seasons.sort(function(a, b){
+							if(a.season > b.season){
+								return 1;
+							}else if(a.season < b.season){
+								return -1;
+							}
+							return 0;
+					});
+					seasons = _.each(show.seasons, function(season){
+						if(season){
+							season.episodes = season.episodes.sort(function(a, b){							
+								if(a.episode > b.episode){
+									return 1;
+								}else if(a.episode < b.episode){
+									return -1;
+								}
+								return 0;
+							});
+						}
+					});
+					if(ep.season 
+						&& ep.episode
+						&& seasons
+						&& seasons[ep.season]
+						&& seasons[ep.season].episodes
+						&& seasons[ep.season].episodes[ep.episode - 1]){
+						ep.overview = seasons[ep.season].episodes[ep.episode - 1].overview;
+					}
+					res.render('shows/episode', {
+						show: show,
+						ep: ep
+					});
+				})
 			});
 		}else{
 			res.redirect('/auth/login');
