@@ -74,6 +74,7 @@ ShowImporter.prototype.importAll = function(dir, callback){
 						if(data && typeof data == 'object' && data.url && data.title){
 							data.url = data.url.replace('http://trakt.tv/shows/', '');
 							data.url = data.url.replace('http://api.trakt.tv/shows/', '');
+							data.url = data.url.replace('/shows/', '');
 							Show.findOne({title: data.title}, function(err, result){
 								if(!err || (result && !result.length)){
 									var show = new Show(data);
