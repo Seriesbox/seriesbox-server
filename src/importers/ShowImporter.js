@@ -89,9 +89,9 @@ ShowImporter.prototype.importAll = function(dir, callback){
 										}
 										async.waterfall([
 											function(next){	
-												var i = 0;
+												var i = 0,
+													seasons;
 												shows[origShow].forEach(function(episode){
-													var seasons;
 													if(data.seasons){
 														seasons = data.seasons.sort(function(a, b){
 																if(a.season > b.season){
@@ -113,15 +113,16 @@ ShowImporter.prototype.importAll = function(dir, callback){
 																});
 															}
 														});
+														data.seasons = seasons;
 													}
-													if(seasons
+													if(data.seasons
 															&& episode
 															&& episode.season
 															&& episode.episode
-															&& seasons[episode.season]
-															&& seasons[episode.season].episodes
-															&& seasons[episode.season].episodes[episode.episode - 1]){
-															seasons[episode.season].episodes[episode.episode - 1].file = episode.file;
+															&& data.seasons[episode.season]
+															&& data.seasons[episode.season].episodes
+															&& data.seasons[episode.season].episodes[episode.episode - 1]){
+															data.seasons[episode.season].episodes[episode.episode - 1].file = episode.file;
 													}
 													if(i == shows[origShow].length - 1){
 														next();
@@ -130,8 +131,8 @@ ShowImporter.prototype.importAll = function(dir, callback){
 												});
 											},
 											function(){	
-												if(seasons){
-													seasons.forEach(function(season){
+												if(data.seasons){
+													data.seasons.forEach(function(season){
 														if(season && season.episodes){
 															self.addEpisodes(show, season.episodes);
 														}
