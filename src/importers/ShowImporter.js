@@ -90,14 +90,37 @@ ShowImporter.prototype.importAll = function(dir, callback){
 											function(next){	
 												var i = 0;
 												shows[origShow].forEach(function(episode){
-													if(data.seasons
+													var seasons;
+													if(data.seasons){
+														seasons = data.seasons.sort(function(a, b){
+																if(a.season > b.season){
+																	return 1;
+																}else if(a.season < b.season){
+																	return -1;
+																}
+																return 0;
+														});
+														seasons = _.each(data.seasons, function(season){
+															if(season){
+																season.episodes = season.episodes.sort(function(a, b){							
+																	if(a.episode > b.episode){
+																		return 1;
+																	}else if(a.episode < b.episode){
+																		return -1;
+																	}
+																	return 0;
+																});
+															}
+														});
+													}
+													if(seasons
 															&& episode
 															&& episode.season
 															&& episode.episode
-															&& data.seasons[episode.season]
-															&& data.seasons[episode.season].episodes
-															&& data.seasons[episode.season].episodes[episode.episode - 1]){
-															data.seasons[episode.season].episodes[episode.episode - 1].file = episode.file;
+															&& seasons[episode.season]
+															&& seasons[episode.season].episodes
+															&& seasons[episode.season].episodes[episode.episode - 1]){
+															seasons[episode.season].episodes[episode.episode - 1].file = episode.file;
 													}
 													if(i == shows[origShow].length - 1){
 														next();
@@ -106,8 +129,8 @@ ShowImporter.prototype.importAll = function(dir, callback){
 												});
 											},
 											function(){	
-												if(data.seasons){
-													data.seasons.forEach(function(season){
+												if(seasons){
+													seasons.forEach(function(season){
 														if(season && season.episodes){
 															self.addEpisodes(show, season.episodes);
 														}
