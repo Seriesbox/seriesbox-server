@@ -162,9 +162,8 @@ module.exports = function home(app, models){
 						'-acodec aac',
 						'-strict experimental',
 						'-frag_duration 1000',
-						'-movflags +frag_keyframe-empty_moov',
-						'-profile:v baseline',
-						'-map_metadata 0:0'
+						'-movflags +frag_keyframe+empty_moov',
+						'-profile:v baseline'
 					];
 					// High quality, not lossless
 					options.push('-g 52', '-crf 22', '-ar 48000', '-ab 320k');
