@@ -170,9 +170,9 @@ module.exports = function home(app, models){
 					res.contentType('video/mp4');
 					console.log(ep.file)
 					var proc = ffmpeg({source: dir + ep.file})
+					.format('mp4')
 					.videoCodec('libx264')
 					.audioCodec('aac')
-					.withVideoBitrate('512k')
 					.addOptions(options)
 					.on('start', function(commandLine) {
 						console.log('Spawned Ffmpeg with command: ' + commandLine);
