@@ -142,7 +142,7 @@ module.exports = function home(app, models){
 	app.get('/transcode/:episodeId', function(req, res){
 		var dir = directoriesConfig.tv,
 			Episode = models.Episode;
-		if(req.isAuthenticated()){
+		if(/*req.isAuthenticated()*/true){
 			Episode
 			.findOne({'_id': req.params.episodeId})
 			.populate('show')
