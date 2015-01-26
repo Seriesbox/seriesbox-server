@@ -159,7 +159,7 @@ module.exports = function home(app, models){
 						'-deinterlace',
 						'-maxrate 10000000',
 						'-bufsize 10000000',
-						'-acodec aac',
+						//'-acodec aac',
 						'-strict experimental',
 						'-frag_duration 1000',
 						'-movflags +frag_keyframe+empty_moov',
@@ -167,11 +167,12 @@ module.exports = function home(app, models){
 					];
 					// High quality, not lossless
 					options.push('-g 52', '-crf 22', '-ar 48000', '-ab 320k');
-					res.contentType('video/mp4');
+					res.contentType('video/webm');
 					console.log(ep.file)
 					var proc = ffmpeg({source: dir + ep.file})
-					.format('mp4')
-					.audioCodec('aac')
+					.format('libvpx')
+					.audioCodec('libvorbis')
+					.withVideoBitrate(1024)
 					.addOptions(options)
 					.on('start', function(commandLine) {
 						console.log('Spawned Ffmpeg with command: ' + commandLine);
