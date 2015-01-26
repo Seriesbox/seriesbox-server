@@ -170,7 +170,7 @@ module.exports = function home(app, models){
 					res.contentType('video/webm');
 					console.log(ep.file)
 					var proc = ffmpeg({source: dir + ep.file})
-					.format('libvpx')
+					.videoCodec('libvpx')
 					.audioCodec('libvorbis')
 					.withVideoBitrate(1024)
 					.addOptions(options)
