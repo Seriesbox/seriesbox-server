@@ -172,7 +172,6 @@ module.exports = function home(app, models){
 					var proc = ffmpeg({source: dir + ep.file})
 					.videoCodec('libvpx')
 					.audioCodec('libvorbis')
-					.withVideoBitrate(1024)
 					.addOptions(options)
 					.on('start', function(commandLine) {
 						console.log('Spawned Ffmpeg with command: ' + commandLine);
