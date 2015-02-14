@@ -16,8 +16,7 @@
 		font-weight: 400;
 		font-size: 120%;
 	}
-	li {
-		float: left;
+	ul li {
 		height: 100%;
 		margin: 0 20px;
 		a {
@@ -28,11 +27,13 @@
 			padding-top: 16px;
 			padding-bottom: 16px;
 		}
-		a:hover {
+		.pure-menu-link:hover,
+		.pure-menu-link:active,
+		.pure-menu-link:focus {
 			background: darken(@header-background-color, 10%);
 		}
 	}
-	li.pure-menu-selected a {
+	ul li.pure-menu-selected a {
 		background: darken(@header-background-color, 10%);
 		color: inherit;
 	}

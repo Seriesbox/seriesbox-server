@@ -100,12 +100,11 @@ input#search {
   font-weight: 400;
   font-size: 120%;
 }
-.pure-menu li {
-  float: left;
+.pure-menu ul li {
   height: 100%;
   margin: 0 20px;
 }
-.pure-menu li a {
+.pure-menu ul li a {
   position: relative;
   display: block;
   color: #fff;
@@ -113,10 +112,12 @@ input#search {
   padding-top: 16px;
   padding-bottom: 16px;
 }
-.pure-menu li a:hover {
+.pure-menu ul li .pure-menu-link:hover,
+.pure-menu ul li .pure-menu-link:active,
+.pure-menu ul li .pure-menu-link:focus {
   background: #1967be;
 }
-.pure-menu li.pure-menu-selected a {
+.pure-menu ul li.pure-menu-selected a {
   background: #1967be;
   color: inherit;
 }
